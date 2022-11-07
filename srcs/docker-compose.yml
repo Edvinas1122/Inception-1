@@ -1,0 +1,75 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx
+    build: ./requirements/nginx
+    container_name: nginx
+    depends_on:
+      - wordpress
+    restart: on-failure
+    networks:
+      - inception
+    ports:
+      - 443:443
+    volumes:
+      - wordpress_volume:/var/www/wordpress
+
+  mariadb:
+    image:  mariadb
+    build:  ./requirements/mariadb
+    container_name: mariadb
+    restart: on-failure
+    networks:
+      - inception
+    ports:
+      - 3306:3306
+    env_file:
+      - ./.env
+    volumes:
+      - db_volume:/var/lib/mysql
+
+  wordpress:
+    image:      wordpress
+    build:      ./requirements/wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: on-failure
+    networks:
+      - inception
+    ports:
+      - 9000:9000
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress_volume:/var/www/wordpress
+
+  static_website:
+    image:    static_website
+    build:    ./requirements/bonus/static_website
+    container_name: static_website
+    restart: on-failure
+    networks:
+      - inception
+    ports:
+      - 3000:3000
+
+volumes:
+  db_volume:
+    name: "db_volume"
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/jtomala/data/db_volume
+  wordpress_volume:
+    name: "wordpress_volume"
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/jtomala/data/wordpress_volume
+
+networks:
+  inception:
+    name: inception
+    driver: bridge

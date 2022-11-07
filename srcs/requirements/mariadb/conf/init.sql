@@ -5,11 +5,12 @@ GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%';
 FLUSH PRIVILEGES;
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'wordpress';
 
--- How to access the database:
--- docker exec -it mariadb /bin/bash
+-- for command help: http://g2pc1.bu.edu/~qzpeng/manual/MySQL%20Commands.htm
+-- for login: 
+-- docker exec -it mariadb bash
 -- mysql; (will not work)
 -- mysql -u wordpress -psecret;
--- show database;
+-- show databases;
 -- use wordpress;
 -- show tables;
 -- exit;

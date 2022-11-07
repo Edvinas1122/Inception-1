@@ -2,8 +2,7 @@ FROM debian:buster
 
 RUN apt-get update && apt-get install nginx -y
 
-ADD nginx.conf /etc/nginx/conf.d/nginx.conf
-COPY certs /etc/nginx/certs/self-signed
-
+COPY	conf/nginx.conf /etc/nginx/sites-available/default
+COPY	conf/index.html /var/www/html/
 
 CMD	["nginx", "-g", "daemon off;"]
