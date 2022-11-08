@@ -23,4 +23,8 @@ wp-cli --allow-root option update siteurl "https://jtomala.42.fr"
 wp-cli --allow-root rewrite structure '/%year%/%monthnum%/%day%/%postname%/'
 wp-cli --allow-root user create student student@example.com --role=contributor --user_pass=student
 
+#bonus
+wp-cli plugin install redis-cache --activate --allow-root
+wp-cli plugin update --all --allow-root
+
 exec "$@"
